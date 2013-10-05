@@ -5,6 +5,7 @@ from optparse import make_option
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import unittest
 from django.utils.importlib import import_module
+import os
 
 try:
     # Django 1.6
@@ -76,7 +77,7 @@ class CIRunner(object):
         super(CIRunner, self).__init__(**options)
         self.jenkins = jenkins
 
-        if self.jenkins:
+        if self.jenkins or 'HUDSON_URL' in os.environ:
             self.output_dir = output_dir
 
             # Import each requested task
